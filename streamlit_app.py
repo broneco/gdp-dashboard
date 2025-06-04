@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import math
 from pathlib import Path
+import matplotlib.pyplot as plt
 
 # Set the title and favicon that appear in the Browser's tab bar.
 st.set_page_config(
@@ -116,6 +117,19 @@ st.line_chart(
     color='Country Code',
 )
 
+st.header('GDP distribution by country', divider='gray')
+
+boxplot_data = [
+    filtered_gdp_df[filtered_gdp_df['Country Code'] == c]['GDP'].dropna()
+    for c in selected_countries
+]
+fig, ax = plt.subplots()
+ax.boxplot(boxplot_data, labels=selected_countries)
+ax.set_xlabel('Country')
+ax.set_ylabel('GDP')
+st.pyplot(fig)
+plt.close(fig)
+
 ''
 ''
 
@@ -159,3 +173,4 @@ for i, country in enumerate(selected_countries):
             delta=growth,
             delta_color=delta_color
         )
+
