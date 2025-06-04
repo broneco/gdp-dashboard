@@ -86,13 +86,13 @@ from_year, to_year = st.slider(
 
 countries = gdp_df['Country Code'].unique()
 
-if not len(countries):
-    st.warning("Select at least one country")
-
 selected_countries = st.multiselect(
     'Which countries would you like to view?',
     countries,
     ['DEU', 'FRA', 'GBR', 'BRA', 'MEX', 'JPN'])
+
+if not selected_countries:
+    st.warning("Select at least one country")
 
 ''
 ''
@@ -133,8 +133,18 @@ for i, country in enumerate(selected_countries):
     col = cols[i % len(cols)]
 
     with col:
-        first_gdp = first_year[first_year['Country Code'] == country]['GDP'].iat[0] / 1000000000
-        last_gdp = last_year[last_year['Country Code'] == country]['GDP'].iat[0] / 1000000000
+        first_year_country = first_year[first_year['Country Code'] == country]['GDP']
+        last_year_country = last_year[last_year['Country Code'] == country]['GDP']
+
+        if first_year_country.dropna().empty:
+            first_gdp = float('nan')
+        else:
+            first_gdp = first_year_country.dropna().iloc[0] / 1_000_000_000
+
+        if last_year_country.dropna().empty:
+            last_gdp = float('nan')
+        else:
+            last_gdp = last_year_country.dropna().iloc[0] / 1_000_000_000
 
         if math.isnan(first_gdp):
             growth = 'n/a'
