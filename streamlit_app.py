@@ -130,6 +130,20 @@ ax.set_ylabel('GDP')
 st.pyplot(fig)
 plt.close(fig)
 
+st.header('GDP distribution by year', divider='gray')
+
+years = list(range(from_year, to_year + 1))
+year_boxplot_data = [
+    filtered_gdp_df[filtered_gdp_df['Year'] == y]['GDP'].dropna()
+    for y in years
+]
+fig2, ax2 = plt.subplots(figsize=(max(6, len(years) * 0.3), 4))
+ax2.boxplot(year_boxplot_data, labels=years)
+ax2.set_xlabel('Year')
+ax2.set_ylabel('GDP')
+st.pyplot(fig2)
+plt.close(fig2)
+
 ''
 ''
 
