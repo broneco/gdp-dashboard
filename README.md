@@ -1,6 +1,8 @@
 # :earth_americas: GDP dashboard template
 
 A simple Streamlit app showing the GDP of different countries in the world.
+In addition to a line chart, the dashboard displays box plots for GDP
+distribution by country and by year.
 
 [![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://gdp-dashboard-template.streamlit.app/)
 
